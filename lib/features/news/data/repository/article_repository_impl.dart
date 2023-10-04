@@ -16,20 +16,20 @@ class ArticleRepositoryImpl implements ArticleRepository {
 
   @override
   Future<DataState<List<ArticleModel>>> getNews() async {
-    return makeAPICall();
+    return _makeAPICall();
   }
 
   @override
   Future<DataState<List<ArticleEntity>>> refreshNews() async {
-    return makeAPICall();
+    return _makeAPICall();
   }
 
   @override
   Future<DataState<List<ArticleEntity>>> fetchNews(int pageNumber) async {
-    return makeAPICall(pageNumber: pageNumber);
+    return _makeAPICall(pageNumber: pageNumber);
   }
 
-  Future<DataState<List<ArticleModel>>> makeAPICall({int? pageNumber}) async {
+  Future<DataState<List<ArticleModel>>> _makeAPICall({int? pageNumber}) async {
     try {
       final httpResponse = await _newsApiService.getArticles(
         apiKey: newsAPIKey,
