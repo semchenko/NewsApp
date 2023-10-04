@@ -1,0 +1,30 @@
+name: news_app
+description: A Supers-Duper news App.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_bloc: ^8.1.2
+  get_it: ^7.6.0
+  retrofit: ^3.0.1
+  flutter_hooks: ^0.18.3
+  cached_network_image: ^3.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+  retrofit_generator: 3.0.1+1
+  build_runner: 2.1.2
+  
+
+flutter:
+  uses-material-design: true
