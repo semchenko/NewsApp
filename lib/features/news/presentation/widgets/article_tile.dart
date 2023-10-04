@@ -40,7 +40,7 @@ class ArticleWidget extends StatelessWidget {
   Widget _buildImage(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 4,
-      height: MediaQuery.of(context).size.width / 4, //double.maxFinite,
+      height: MediaQuery.of(context).size.width / 4,
       child: CachedNetworkImage(
           imageUrl: article?.urlToImage ?? defaultImage,
           imageBuilder: (context, imageProvider) => Padding(

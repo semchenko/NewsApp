@@ -16,62 +16,27 @@ class ArticleRepositoryImpl implements ArticleRepository {
 
   @override
   Future<DataState<List<ArticleModel>>> getNews() async {
-    try {
-      final httpResponse = await _newsApiService.getArticles(
-        apiKey: newsAPIKey,
-        country: countryQuery,
-        category: categoryQuery,
-        pageSize: pageSize,
-      );
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(httpResponse.data);
-      } else {
-        return DataFailed(DioError(
-            error: httpResponse.response.statusMessage,
-            response: httpResponse.response,
-            type: DioErrorType.response,
-            requestOptions: httpResponse.response.requestOptions));
-      }
-    } on DioError catch (e) {
-      return DataFailed(e);
-    }
+    return makeAPICall();
   }
 
   @override
   Future<DataState<List<ArticleEntity>>> refreshNews() async {
-    try {
-      final httpResponse = await _newsApiService.getArticles(
-        apiKey: newsAPIKey,
-        country: countryQuery,
-        category: categoryQuery,
-        pageSize: pageSize,
-      );
-
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(httpResponse.data);
-      } else {
-        return DataFailed(DioError(
-            error: httpResponse.response.statusMessage,
-            response: httpResponse.response,
-            type: DioErrorType.response,
-            requestOptions: httpResponse.response.requestOptions));
-      }
-    } on DioError catch (e) {
-      return DataFailed(e);
-    }
+    return makeAPICall();
   }
 
   @override
   Future<DataState<List<ArticleEntity>>> fetchNews(int pageNumber) async {
+    return makeAPICall(pageNumber: pageNumber);
+  }
+
+  Future<DataState<List<ArticleModel>>> makeAPICall({int? pageNumber}) async {
     try {
       final httpResponse = await _newsApiService.getArticles(
         apiKey: newsAPIKey,
         country: countryQuery,
         category: categoryQuery,
         pageSize: pageSize,
-        page: pageNumber.toString(),
       );
-
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {

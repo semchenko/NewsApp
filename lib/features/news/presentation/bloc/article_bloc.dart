@@ -18,34 +18,17 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
     this._refreshArticlesUseCase,
     this._fetchArticlesUseCase,
   ) : super(const ArticlesLoading()) {
-
     on<GetArticles>(onGetArticles);
     on<RefreshArticles>(onRefreshArticles);
     on<FetchArticles>(onFetchArticles);
   }
 
   void onGetArticles(GetArticles event, Emitter<ArticlesState> emit) async {
-    final dataState = await _getArticleUseCase();
-
-    if (dataState is DataSuccess) {
-      emit(ArticlesLoaded(dataState.data!));
-    }
-
-    if (dataState is DataFailed) {
-      emit(ArticlesError(dataState.error!));
-    }
+    _emitState(await _getArticleUseCase());
   }
 
   void onRefreshArticles(RefreshArticles event, Emitter<ArticlesState> emit) async {
-    final dataState = await _refreshArticlesUseCase();
-
-    if (dataState is DataSuccess) {
-      emit(ArticlesLoaded(dataState.data!));
-    }
-
-    if (dataState is DataFailed) {
-      emit(ArticlesError(dataState.error!));
-    }
+    _emitState(await _refreshArticlesUseCase());
   }
 
   void onFetchArticles(FetchArticles event, Emitter<ArticlesState> emit) async {
@@ -57,6 +40,16 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
 
     if (dataState is DataFailed) {
       emit(ArticlesError(dataState.error!));
+    }
+  }
+
+  void _emitState(DataState<List<ArticleEntity>> state) {
+    if (state is DataSuccess) {
+      emit(ArticlesLoaded(state.data!));
+    }
+
+    if (state is DataFailed) {
+      emit(ArticlesError(state.error!));
     }
   }
 }
